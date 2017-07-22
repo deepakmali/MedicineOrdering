@@ -23,7 +23,7 @@ class User(models.Model):
     Drug_License = models.CharField(max_length=100, null=False, help_text="Enter the Valid Drug License Number.")
     DL_expiry_date = models.DateField(help_text="Enter the Drug license Expiry date.")
     GSTIN = models.CharField(max_length=50, null=False, help_text="Enter the GSTIN number.")
-    Active = models.BooleanField(default=False)
+    Active = models.BooleanField(default=True)
 
     def __str__(self):
         """
