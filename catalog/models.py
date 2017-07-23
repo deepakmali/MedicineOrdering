@@ -6,6 +6,9 @@ from django.db import models
 # to populate primary keys
 import uuid
 
+# to get the get_absolute_url
+from django.urls import reverse
+
 # Create your models here.
 class User(models.Model):
     """
@@ -24,6 +27,7 @@ class User(models.Model):
     DL_expiry_date = models.DateField(help_text="Enter the Drug license Expiry date.")
     GSTIN = models.CharField(max_length=50, null=False, help_text="Enter the GSTIN number.")
     Active = models.BooleanField(default=True)
+    verified = models.BooleanField(default=False)
 
     def __str__(self):
         """
@@ -43,6 +47,10 @@ class Company(models.Model):
         """
         return self.Company_name
 
+    def get_absolute_url(self):
+        """
+        """
+        return reverse('company_products', args=[str(self.id)])
 
 class Product(models.Model):
     """

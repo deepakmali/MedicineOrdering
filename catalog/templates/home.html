@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4" style="border-right: solid;">
+        <!-- Companies list -->
+        <ul>
+            {% for company in companies %}
+                <li> <a href="{{ company.get_absolute_url }}">{{ company.Company_name }} </a> </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+    <div class="col-md-4 text-center">
+        <!-- products of a company list -->
+        {% if selected_company %}
+            <h3>Products of {{ selected_company.Company_name }}</h3>
+        {% endif %}
+        {% if products %}
+            <ul>
+                {% for product in products %}
+                    <li> {{ product.Product_name }} </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>There are no products in stock for this product <br> or <br> No product </p>
+        {% endif %}
+    </div>
+    <div class="col-md-4">
+        <!-- selected products list -->
+    </div>  
+</div>
+{% endblock %}
