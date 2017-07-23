@@ -31,8 +31,10 @@ def products(request, uuid):
     # list all prodcts of a Company
     companies = Company.objects.all()
     selected_company = Company.objects.filter(id=uuid).first()
-    products = Product.objects.filter(Company=selected_company).all()
-    products_stock = {}
+    # products = Product.objects.filter(Company=selected_company).all()
+    # products_stock = {}
+    stocks = Stock.objects.filter(Code__in=Product.objects.filter(Company=selected_company).all()).all()
+    print stocks
     # for product in products:
     #     products_stock[product] = Stock.objects.filter(Code=product, available_units > 0).first().available_units
     # print products_stock
@@ -41,6 +43,7 @@ def products(request, uuid):
                   'home.html',
                   context={'companies' : companies,
                            'selected_company' : selected_company,
-                           'products' : products
+                           # 'products' : products,
+                           'stocks' : stocks
                           },
                   )

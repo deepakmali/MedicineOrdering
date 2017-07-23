@@ -3,6 +3,7 @@
 <div class="row">
     <div class="col-md-4" style="border-right: solid;">
         <!-- Companies list -->
+        <h3>Companies</h3>
         <ul>
             {% for company in companies %}
                 <li> <a href="{{ company.get_absolute_url }}">{{ company.Company_name }} </a> </li>
@@ -10,15 +11,24 @@
         </ul>
 
     </div>
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 text-left">
         <!-- products of a company list -->
         {% if selected_company %}
             <h3>Products of {{ selected_company.Company_name }}</h3>
         {% endif %}
-        {% if products %}
+        <!-- {% if products %}
             <ul>
                 {% for product in products %}
                     <li> {{ product.Product_name }} </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>There are no products in stock for this product <br> or <br> No product </p>
+        {% endif %} -->
+        {% if stocks %}
+            <ul>
+                {% for stock in stocks %}
+                    <li>{{ stock.Code.Product_name }} {{ stock.Available_units }} </li>
                 {% endfor %}
             </ul>
         {% else %}

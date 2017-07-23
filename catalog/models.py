@@ -63,7 +63,7 @@ class Product(models.Model):
     def __str__(self):
         """
         """
-        return self.Product_name
+        return str(self.Code)
 
 
 class Stock(models.Model):
@@ -75,7 +75,7 @@ class Stock(models.Model):
     def __str__(self):
         """
         """
-        return self.Code
+        return str(self.Code)
 
 
 class Order(models.Model):
