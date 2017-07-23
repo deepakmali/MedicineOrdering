@@ -32,13 +32,25 @@ class User(models.Model):
         return self.Name_of_the_firm
 
 
+class Company(models.Model):
+    """
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique identifier for company.")
+    Company_name = models.CharField(max_length=250, help_text="Enter the company name.")
+
+    def __str__(self):
+        """
+        """
+        return self.Company_name
+
+
 class Product(models.Model):
     """
     This contains the details of the products.
     """
     Code = models.IntegerField(primary_key=True, help_text="Enter the code for the product.")
     Product_name = models.CharField(max_length=250, null=False, help_text="Enter the product name.")
-    Company = models.CharField(max_length=250, null=False, help_text="Enter the company name.")
+    Company = models.ForeignKey('Company', on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         """
@@ -49,7 +61,7 @@ class Product(models.Model):
 class Stock(models.Model):
     """
     """
-    Code = models.ForeignKey('Product', on_delete=models.CASCADE, null=True)
+    Code = models.ForeignKey('Product', on_delete=models.CASCADE)
     Available_units = models.IntegerField(help_text="Enter the number of available units.")
 
     def __str__(self):
