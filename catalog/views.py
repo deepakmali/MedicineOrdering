@@ -29,21 +29,34 @@ def products(request, uuid):
     """
     """
     # list all prodcts of a Company
-    companies = Company.objects.all()
-    selected_company = Company.objects.filter(id=uuid).first()
-    # products = Product.objects.filter(Company=selected_company).all()
-    # products_stock = {}
-    stocks = Stock.objects.filter(Code__in=Product.objects.filter(Company=selected_company).all()).all()
-    print stocks
-    # for product in products:
-    #     products_stock[product] = Stock.objects.filter(Code=product, available_units > 0).first().available_units
-    # print products_stock
-    return render(
-                  request,
-                  'home.html',
-                  context={'companies' : companies,
-                           'selected_company' : selected_company,
-                           # 'products' : products,
-                           'stocks' : stocks
-                          },
-                  )
+    print request.method
+    if request.method == 'GET':
+        companies = Company.objects.all()
+        selected_company = Company.objects.filter(id=uuid).first()
+        # products = Product.objects.filter(Company=selected_company).all()
+        # products_stock = {}
+        stocks = Stock.objects.filter(Code__in=Product.objects.filter(Company=selected_company).all()).all()
+        print stocks
+        # for product in products:
+        #     products_stock[product] = Stock.objects.filter(Code=product, available_units > 0).first().available_units
+        # print products_stock
+        return render(
+                      request,
+                      'home.html',
+                      context={'companies' : companies,
+                               'selected_company' : selected_company,
+                               # 'products' : products,
+                               'stocks' : stocks
+                              },
+                      )
+
+
+# Signup page
+def signup(request):
+    if request.method == 'GET':
+        return render(
+                      request,
+                      'signup.html'
+                      )
+    else:
+        pass

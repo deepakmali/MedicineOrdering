@@ -6,4 +6,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^company/(?P<uuid>[^/]+)/$', views.products, name='company_products'),
+    url(r'^signup/$', views.signup, name='signup'),
 ]
