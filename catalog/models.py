@@ -52,6 +52,15 @@ class Company(models.Model):
         """
         return reverse('company_products', args=[str(self.id)])
 
+    # static method to return json list of companies
+    @property
+    def serialize(self):
+        return {
+        "id" : str(self.id) ,
+        "Name" : str(self.Company_name)
+        }
+
+
 class Product(models.Model):
     """
     This contains the details of the products.
@@ -65,6 +74,13 @@ class Product(models.Model):
         """
         return str(self.Code)
 
+    @property
+    def serialize(self):
+        return {
+        "id" : str(self.id) ,
+        "Name" : str(self.Company_name)
+        }
+
 
 class Stock(models.Model):
     """
@@ -76,6 +92,13 @@ class Stock(models.Model):
         """
         """
         return str(self.Code)
+
+    @property
+    def serialize(self):
+        return {
+        "id" : str(self.id) ,
+        "Name" : str(self.Company_name)
+        }
 
 
 class Order(models.Model):
@@ -90,7 +113,12 @@ class Order(models.Model):
         """
         """
         return self.OrderId
-
+    @property
+    def serialize(self):
+        return {
+        "id" : str(self.id) ,
+        "Name" : str(self.Company_name)
+        }
 
 class OrderDetails(models.Model):
     """
@@ -99,3 +127,10 @@ class OrderDetails(models.Model):
     OrderId = models.ForeignKey('Order')
     Code = models.ForeignKey('Product')
     Quantity = models.IntegerField(help_text="Enter the required quantity.")
+
+    @property
+    def serialize(self):
+        return {
+        "id" : str(self.id) ,
+        "Name" : str(self.Company_name)
+        }

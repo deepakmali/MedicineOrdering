@@ -3,25 +3,37 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
+# for testing http response, remove this later
+from django.http import HttpResponse
+import simplejson as json 
+
 # Create your views here.
 # import all the database objects
 from .models import User, Company, Product, Stock, Order, OrderDetails
 
+# for ajax requests
+# from jsonify.decorators import ajax_request
 
 # Signup page for users.
+# @ajax_request
 def index(request):
     """
     """
     # list all the companies
     companies = Company.objects.all()
-    return render(
-                  request,
-                  'home.html',
-                  context={'companies' : companies,
-                           'selected_company' : None,
-                           'products' : None
-                          },
-                  )
+    # return render(
+    #               request,
+    #               'home.html',
+    #               context={'companies' : companies,
+    #                        'selected_company' : None,
+    #                        'products' : None
+    #                       },
+    #               )
+    # return jsonify(companies_list = [i.serialize for i in companies])
+    companies_list = [i.serialize for i in companies]
+    # return {'companies' : companies_list}
+    print companies_list
+    return HttpResponse(json.dumps(companies_list))
 
 
 # displaying products related to a Company
