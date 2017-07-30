@@ -16,14 +16,25 @@ var orders_div = $('#orderList');
 function initLoad(){
     // ajax request to get all the companies
     $.getJSON(getAllCompanies, function(result){
-        console.log(result);
+        companies_list = '';
+        for(i=0;i<result.length;i++){
+            companies_list += '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
+        }
+        // console.log(result);
+        companies_div.append(companies_list);
     }).fail(function(){
         console.log('failed');
     });
 
-    // ajax request to get all the products
+    // ajax request to get top20 the products
     $.getJSON(getAllProducts, function(data){
-    console.log(data);
+        products_list = '';
+        for(i=0;i<data.length;i++){
+            products_list += '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
+        }
+        // console.log(data);
+        console.log(products_list);
+        products_div.append(products_list);
     }).fail(function(){
         console.log('failed');
     });
