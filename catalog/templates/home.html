@@ -1,13 +1,30 @@
 {% extends "base_generic.html" %}
 {% block content %}
+<div class="row text-center" style="height: 3vh;background-color: #94003a;">
+    <div class="col-md-4">
+        <input id="comp_search_word" type="text" name="Search">
+        <button id="search_companies" type="button" aria-label="Left Align">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="col-md-4">
+        <input id="prod_search_word" type="text" name="Search">
+        <button id="search_products" type="button" aria-label="Left Align">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+    </div>
+    <div class="col-md-4">
+        <button>Checkout<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button>
+    </div>
+</div>
 <div class="row">
-    <div class="col-md-4" style="background-color: #f36e1f; opacity: 0.3; height: 93vh; overflow: scroll;">
+    <div class="col-md-4" id="compList" style="background-color: #f36e1f; opacity: 0.3; height: 90vh; overflow: scroll;">
         
     </div>
-    <div class="col-md-4" style="background-color: #f9a618; opacity: 0.3; height: 93vh;overflow: scroll;">
+    <div class="col-md-4" id="prodList" style="background-color: #f9a618; opacity: 0.3; height: 90vh;overflow: scroll;">
         
     </div>
-    <div class="col-md-4" style="background-color: #abc229; opacity: 0.3; height: 93vh;overflow: scroll;">
+    <div class="col-md-4" id="orderList" style="background-color: #abc229; opacity: 0.3; height: 90vh;overflow: scroll;">
         
     </div>
 </div>

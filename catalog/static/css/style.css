@@ -3,3 +3,8 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 }
+
+input {
+	background-color: #d2477c;
+	color: black;
+}
