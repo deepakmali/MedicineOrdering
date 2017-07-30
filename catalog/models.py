@@ -93,11 +93,17 @@ class Stock(models.Model):
         """
         return str(self.Code)
 
+    # top 20 products on stock availability to display initially
+    @staticmethod
+    def getTop20():
+        return Stock.objects.order_by('-Available_units')[:20]
+
     @property
     def serialize(self):
         return {
-        "id" : str(self.id) ,
-        "Name" : str(self.Company_name)
+        "code" : str(self.Code) ,
+        "Name" : str(self.Code.Product_name),
+        "Available" : str(self.Available_units)
         }
 
 

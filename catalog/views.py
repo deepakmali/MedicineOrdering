@@ -19,8 +19,10 @@ from .models import User, Company, Product, Stock, Order, OrderDetails
 def index(request):
     """
     """
+    if request.method == 'GET':
+        return render(request, 'home.html')
     # list all the companies
-    companies = Company.objects.all()
+    # companies = Company.objects.all()
     # return render(
     #               request,
     #               'home.html',
@@ -29,38 +31,50 @@ def index(request):
     #                        'products' : None
     #                       },
     #               )
-    # return jsonify(companies_list = [i.serialize for i in companies])
-    companies_list = [i.serialize for i in companies]
-    # return {'companies' : companies_list}
-    print companies_list
-    return HttpResponse(json.dumps(companies_list))
+
+
+# displaying companies alphabetically.
+def companies(request):
+    if request.method == 'GET':
+        companies = Company.objects.all()
+        companies_list = [i.serialize for i in companies]
+        return HttpResponse(json.dumps(companies_list))
+    else:
+        return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
 
 
 # displaying products related to a Company
-def products(request, uuid):
+def products(request):
     """
     """
-    # list all prodcts of a Company
-    print request.method
     if request.method == 'GET':
-        companies = Company.objects.all()
-        selected_company = Company.objects.filter(id=uuid).first()
-        # products = Product.objects.filter(Company=selected_company).all()
-        # products_stock = {}
-        stocks = Stock.objects.filter(Code__in=Product.objects.filter(Company=selected_company).all()).all()
-        print stocks
-        # for product in products:
-        #     products_stock[product] = Stock.objects.filter(Code=product, available_units > 0).first().available_units
-        # print products_stock
-        return render(
-                      request,
-                      'home.html',
-                      context={'companies' : companies,
-                               'selected_company' : selected_company,
-                               # 'products' : products,
-                               'stocks' : stocks
-                              },
-                      )
+        top_products = Stock.getTop20()
+        products_list = [i.serialize for i in top_products]
+        return HttpResponse(json.dumps(products_list))
+    else:
+        return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
+
+
+# to search the companies based on user's search keyword
+def company_search(request, comp_search_word):
+    if request.method == 'GET':
+        companies = Company.objects.filter(Company_name__icontains = comp_search_word).all()
+        companies_list = [i.serialize for i in companies]
+        return HttpResponse(json.dumps(companies_list))
+    else:
+        return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
+
+
+# to search the products based on user's search keyword
+def product_search(request, prod_search_word):
+    if request.method == 'GET':
+        stocks = Stock.objects.filter(Code__in=Product.objects.filter(Product_name__icontains = prod_search_word).all()).all()
+        # this is actually stocks but i have used product variable name since I display product name there predominantly
+        products_list = [i.serialize for i in stocks]
+        return HttpResponse(json.dumps(products_list))
+    else:
+        return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
+
 
 
 # Signup page
