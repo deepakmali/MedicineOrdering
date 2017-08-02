@@ -8,6 +8,7 @@ var getAllCompanies = "http://127.0.0.1:8000/catalog/companies/";
 var getAllProducts = "http://127.0.0.1:8000/catalog/products/";
 var getFilteredCompanies = "http://127.0.0.1:8000/catalog/companies/";
 var getFilteredProducts = "http://127.0.0.1:8000/catalog/products/";
+var company_products = "http://127.0.0.1:8000/catalog/company/"
 var companies_div = $('#compList');
 var products_div = $('#prodList');
 var orders_div = $('#orderList');
@@ -20,7 +21,7 @@ function initLoad(){
         for(i=0;i<result.length;i++){
             companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
             companies_div.append(companies_list);
-            $('#' + result[i].id).click(function(e){alert(this.id);});
+            $('#' + result[i].id).click(display_company_products);
         }
         // console.log(result);
         // companies_div.append(companies_list);
@@ -128,3 +129,20 @@ $('#compList > .list-group-item').on("click", function(){alert('hi');});
 
 
 // function to get and display the filtered products based on the company selected.
+function display_company_products(){
+    // company_products += company_id + '/' ;
+    productsOfComapany = '';
+    productsOfComapany = company_products + this.id + '/' ;
+    $.getJSON(productsOfComapany, function(data){
+        products_list = '';
+        products_div.empty();
+        for(i=0;i<data.length;i++){
+            products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
+            products_div.append(products_list);
+            $('#' + data[i].code).click(function(){alert(this.id);});
+        }
+        // products_div.append(products_list);
+    }).fail(function(){
+        console.log('failed');
+    });
+}

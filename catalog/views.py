@@ -43,7 +43,7 @@ def companies(request):
         return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
 
 
-# displaying products related to a Company
+# displaying top 20 available products.
 def products(request):
     """
     """
@@ -75,6 +75,15 @@ def product_search(request, prod_search_word):
     else:
         return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
 
+
+# to search products based on companies
+def company_products(request, uuid):
+    if request.method == 'GET':
+        stocks = Stock.objects.filter(Code__in = Product.objects.filter(Company = uuid).all()).all()
+        products_list = [i.serialize for i in stocks]
+        return HttpResponse(json.dumps(products_list))
+    else:
+        return HttpResponse('<h1>You are not allowed to do this operation!!</h1>')
 
 
 # Signup page

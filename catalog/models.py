@@ -98,6 +98,11 @@ class Stock(models.Model):
     def getTop20():
         return Stock.objects.order_by('-Available_units')[:20]
 
+    @classmethod
+    def getCompanyProducts(company_id):
+        pass
+
+
     @property
     def serialize(self):
         return {
