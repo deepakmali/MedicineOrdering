@@ -63,7 +63,7 @@ function displayFilteredCompanies(){
             for(i=0;i<result.length;i++){
                 companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
                 companies_div.append(companies_list);
-                $('#' + result[i].id).click(function(e){alert(this.id);});
+                $('#' + result[i].id).click(display_company_products);
             }
         }).fail(function(){
             console.log('failed');
@@ -76,7 +76,7 @@ function displayFilteredCompanies(){
         for(i=0;i<result.length;i++){
             companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
             companies_div.append(companies_list);
-            $('#' + result[i].id).click(function(e){alert(this.id);});
+            $('#' + result[i].id).click(display_company_products);
         }
         // console.log(result);
         // companies_div.append(companies_list);
