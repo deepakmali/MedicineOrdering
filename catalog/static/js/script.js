@@ -35,7 +35,8 @@ function initLoad(){
         for(i=0;i<data.length;i++){
             products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
             products_div.append(products_list);
-            $('#' + data[i].code).click(function(e){alert(this.id);});
+            // $('#' + data[i].code).click(function(e){alert(this.id);});
+            $('#' + data[i].code).click(add_products_to_cart);
         }
         // products_div.append(products_list);
     }).fail(function(){
@@ -96,9 +97,9 @@ function displayFilteredProducts(){
             products_list = '';
             products_div.empty();
             for(i=0;i<data.length;i++){
-                products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
+                products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + '' + '</span></li>';
                 products_div.append(products_list);
-                $('#' + data[i].code).click(function(){alert(this.id);});
+                $('#' + data[i].code).click(add_products_to_cart);
             }
         }).fail(function(){
             console.log('failed');
@@ -111,7 +112,7 @@ function displayFilteredProducts(){
         for(i=0;i<data.length;i++){
             products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
             products_div.append(products_list);
-            $('#' + data[i].code).click(function(){alert(this.id);});
+            $('#' + data[i].code).click(add_products_to_cart);
         }
         // products_div.append(products_list);
     }).fail(function(){
@@ -139,10 +140,19 @@ function display_company_products(){
         for(i=0;i<data.length;i++){
             products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
             products_div.append(products_list);
-            $('#' + data[i].code).click(function(){alert(this.id);});
+            $('#' + data[i].code).click(add_products_to_cart);
         }
         // products_div.append(products_list);
     }).fail(function(){
         console.log('failed');
     });
+}
+
+
+// function to add the clicked products to orders list
+function add_products_to_cart(){
+    console.log(this)
+    console.log($(this).text());
+    var product = '<li id="' + this.id + '" class="list-group-item justify-content-between">' + $(this).text() + '</span></li>';
+    orders_div.append(product);
 }
