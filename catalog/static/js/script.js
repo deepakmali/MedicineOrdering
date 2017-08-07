@@ -13,42 +13,46 @@ var companies_div = $('#compList');
 var products_div = $('#prodList');
 var orders_div = $('#orderList');
 
+
 // function to load the companies
 function initLoad(){
     // ajax request to get all the companies
     $.getJSON(getAllCompanies, function(result){
-        companies_list = '';
-        for(i=0;i<result.length;i++){
-            companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
-            companies_div.append(companies_list);
-            $('#' + result[i].id).click(display_company_products);
-        }
-        // console.log(result);
-        // companies_div.append(companies_list);
+        renderCompanies(result);
     }).fail(function(){
         console.log('failed');
     });
 
     // ajax request to get top20 the products
     $.getJSON(getAllProducts, function(data){
-        products_list = '';
-        for(i=0;i<data.length;i++){
-            products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
-            products_div.append(products_list);
-            // $('#' + data[i].code).click(function(e){alert(this.id);});
-            $('#' + data[i].code).click(add_products_to_cart);
-        }
-        // products_div.append(products_list);
+        renderProducts(data);
     }).fail(function(){
         console.log('failed');
     });
+}
 
-    // click event for all the companies
-    // $("#compList > .list-group-item").click(function(e){alert(this.id);});
-    // $(document).ready($('#compList > .list-group-item').on("click", function(){alert('hi');});)
+// function to render the company json in the first column
+function renderCompanies(result){
+    companies_div.empty();
+    companies_list = '';
+    for(i=0;i<result.length;i++){
+        companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
+        companies_div.append(companies_list);
+        $('#' + result[i].id).click(display_company_products);
+    }
 }
 
 
+// function to render the products json in the middle column
+function renderProducts(data){
+    products_div.empty();
+    products_list = '';
+    for(i=0;i<data.length;i++){
+        products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
+        products_div.append(products_list);
+        $('#' + data[i].code).click(add_products_to_cart);
+    }
+}
 
 
 function displayFilteredCompanies(){
@@ -59,31 +63,17 @@ function displayFilteredCompanies(){
     if(comp_search_word != ''){
         company_search_url = getFilteredCompanies + comp_search_word + '/' ;
         $.getJSON(company_search_url, function(result){
-            companies_list = '';
-            companies_div.empty();
-            for(i=0;i<result.length;i++){
-                companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
-                companies_div.append(companies_list);
-                $('#' + result[i].id).click(display_company_products);
-            }
+            renderCompanies(result);
         }).fail(function(){
             console.log('failed');
         });    
     }
     else{
         $.getJSON(getAllCompanies, function(result){
-        companies_list = '';
-        companies_div.empty();
-        for(i=0;i<result.length;i++){
-            companies_list = '<button id="' + result[i].id+ '"type="button" class="list-group-item list-group-item-action">'+ result[i].Name + '</button>';
-            companies_div.append(companies_list);
-            $('#' + result[i].id).click(display_company_products);
-        }
-        // console.log(result);
-        // companies_div.append(companies_list);
-    }).fail(function(){
-        console.log('failed');
-    });
+        renderCompanies(result);
+        }).fail(function(){
+            console.log('failed');
+        });
     }
 }
 
@@ -94,27 +84,14 @@ function displayFilteredProducts(){
     if(prod_search_word != ''){
         product_search_url = getFilteredProducts + prod_search_word + '/'
         $.getJSON(product_search_url, function(data){
-            products_list = '';
-            products_div.empty();
-            for(i=0;i<data.length;i++){
-                products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + '' + '</span></li>';
-                products_div.append(products_list);
-                $('#' + data[i].code).click(add_products_to_cart);
-            }
+            renderProducts(data);
         }).fail(function(){
             console.log('failed');
         });    
     }
     else{
         $.getJSON(getAllProducts, function(data){
-        products_list = '';
-        products_div.empty();
-        for(i=0;i<data.length;i++){
-            products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
-            products_div.append(products_list);
-            $('#' + data[i].code).click(add_products_to_cart);
-        }
-        // products_div.append(products_list);
+        renderProducts(data);
     }).fail(function(){
         console.log('failed');
     });
@@ -135,14 +112,7 @@ function display_company_products(){
     productsOfComapany = '';
     productsOfComapany = company_products + this.id + '/' ;
     $.getJSON(productsOfComapany, function(data){
-        products_list = '';
-        products_div.empty();
-        for(i=0;i<data.length;i++){
-            products_list = '<li id="' + data[i].code + '" class="list-group-item justify-content-between">' + data[i].Name + '<span class="badge badge-default badge-pill">' + data[i].Available + '</span></li>';
-            products_div.append(products_list);
-            $('#' + data[i].code).click(add_products_to_cart);
-        }
-        // products_div.append(products_list);
+        renderProducts(data);
     }).fail(function(){
         console.log('failed');
     });
