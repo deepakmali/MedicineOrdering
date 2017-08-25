@@ -8,13 +8,15 @@ import uuid
 
 # to get the get_absolute_url
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
-class User(models.Model):
+class Customer(models.Model):
     """
     This contains the model to store the users details.
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique identification for user.")
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     Name_of_the_firm = models.CharField(max_length=100, help_text="Enter the name of your firm.")
     Address = models.TextField(max_length=500, help_text="Enter the Delivery address.")
     Pincode = models.IntegerField()
@@ -117,7 +119,7 @@ class Order(models.Model):
     """
     OrderId = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique identifier to identify orders.")
     Order_date = models.DateTimeField(auto_now=True)
-    Placed_by = models.ForeignKey('User')
+    Placed_by = models.ForeignKey(settings.AUTH_USER_MODEL)
 
 
     def __str__(self):
