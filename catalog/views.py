@@ -111,19 +111,31 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = User.objects.get(username=username)
             print user.username
-            newCustomer = Customer()
-            newCustomer.user = user
-            newCustomer.Name_of_the_firm = form.cleaned_data.get('Name_of_the_firm')
-            newCustomer.Address = form.cleaned_data.get('Address')
-            newCustomer.Pincode = form.cleaned_data.get('Pincode')
-            newCustomer.Email = form.cleaned_data.get('Email')
-            newCustomer.Contact_person = form.cleaned_data.get('Contact_person')
-            newCustomer.Designation = form.cleaned_data.get('Designation')
-            newCustomer.Office_phone = form.cleaned_data.get('Office_phone')
-            newCustomer.Mobile_phone = form.cleaned_data.get('Mobile_phone')
-            newCustomer.Drug_License = form.cleaned_data.get('Drug_License')
-            newCustomer.DL_expiry_date = form.cleaned_data.get('DL_expiry_date')
-            newCustomer.GSTIN = form.cleaned_data.get('GSTIN')
+            newCustomer = Customer(user = user,
+                                   Name_of_the_firm = form.cleaned_data.get('Name_of_the_firm'),
+                                   Address = form.cleaned_data.get('Address'),
+                                   Pincode = form.cleaned_data.get('Pincode'),
+                                   Email = form.cleaned_data.get('Email'),
+                                   Contact_person = form.cleaned_data.get('Contact_person'),
+                                   Designation = form.cleaned_data.get('Designation'),
+                                   Office_phone = form.cleaned_data.get('Office_phone'),
+                                   Mobile_phone = form.cleaned_data.get('Mobile_phone'),
+                                   Drug_License = form.cleaned_data.get('Drug_License'),
+                                   DL_expiry_date = form.cleaned_data.get('DL_expiry_date'),
+                                   GSTIN = form.cleaned_data.get('GSTIN')
+                                   )
+            # newCustomer.user = user
+            # newCustomer.Name_of_the_firm = form.cleaned_data.get('Name_of_the_firm')
+            # newCustomer.Address = form.cleaned_data.get('Address')
+            # newCustomer.Pincode = form.cleaned_data.get('Pincode')
+            # newCustomer.Email = form.cleaned_data.get('Email')
+            # newCustomer.Contact_person = form.cleaned_data.get('Contact_person')
+            # newCustomer.Designation = form.cleaned_data.get('Designation')
+            # newCustomer.Office_phone = form.cleaned_data.get('Office_phone')
+            # newCustomer.Mobile_phone = form.cleaned_data.get('Mobile_phone')
+            # newCustomer.Drug_License = form.cleaned_data.get('Drug_License')
+            # newCustomer.DL_expiry_date = form.cleaned_data.get('DL_expiry_date')
+            # newCustomer.GSTIN = form.cleaned_data.get('GSTIN')
             newCustomer.save()
             user = authenticate(username=username, password=raw_password)
             login(request, user)

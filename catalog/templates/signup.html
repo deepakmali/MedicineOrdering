@@ -1,8 +1,13 @@
 {% extends "base_generic.html" %}
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h2>Sign up</h2>  
+  </div>
+</div>
+  
+  <!-- <form method="post"> -->
+    <!-- {% csrf_token %}
     {% for field in form %}
       <p>
         {{ field.label_tag }}<br>
@@ -16,5 +21,34 @@
       </p>
     {% endfor %}
     <button type="submit">Sign up</button>
+  </form> -->
+
+  <div class="row">
+    <div class="col-md-8">
+      <!-- <img src="/static/img/400dpiLogoCropped.jpg" class="img-rounded" alt="Cinque Terre" > -->
+      <img src="/static/img/400dpiLogoCropped.jpg" alt="Cinque Terre" width="100%" height="100%" style="padding-left: 50px">
+      <!-- <img src="/static/img/400dpiLogo.jpg"> -->
+    </div>
+    <div class="col-md-4 text-center" style="height: 80vh; overflow: scroll;">
+      <form method="post">
+      {% csrf_token %}
+  {% for field in form %}
+  <div class="form-group">
+    <label>{{ field.label_tag }}</label><br>
+    {{ field }}
+    {% if field.help_text %}
+          <br><small style="color: grey">{% autoescape off %}
+    {{ field.help_text }}
+{% endautoescape %}</small>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <button type="submit">Sign up</button>
   </form>
+    </div>
+    <!-- <div class="col-md-3">
+      
+    </div> -->
+  </div>
+  
 {% endblock %}
